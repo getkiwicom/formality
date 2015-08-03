@@ -151,8 +151,10 @@ bintray {
         repo = "maven"
         name = projectNameMaven
         websiteUrl = siteUrl
+        desc = 'Create Android forms fast'
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
+        labels = ['android', 'forms']
         publish = true
     }
 }
