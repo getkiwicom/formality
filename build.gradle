@@ -15,6 +15,17 @@
  */
 
 apply plugin: 'com.android.library'
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+def projectNameMaven = 'formality'
+
+group = 'com.roxbyte.${projectNameMaven}'
+version = '0.2.1'
+
+def siteUrl = 'https://github.com/Roxbyte/${projectNameMaven}'
+def gitUrl = 'https://github.com/Roxbyte/${projectNameMaven}.git'
+
 
 android {
     compileSdkVersion 22
@@ -24,7 +35,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 22
         versionCode masterCount()
-        versionName "0.2.1"
+        versionName version
     }
     buildTypes {
         release {
@@ -35,7 +46,6 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
 }
 
@@ -53,3 +63,96 @@ def masterCount(){
     return byteArrayOutputStream.toString().trim().toInteger()
 }
 
+//Bintray configuration
+
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = projectNameMaven
+
+    publishedGroupId = 'com.roxbyte.${projectNameMaven}'
+    libraryName = projectNameMaven
+    artifact = projectNameMaven
+
+    siteUrl = siteUrl
+    gitUrl = gitUrl
+
+    libraryVersion = version
+
+    developerId = 'roxbyte'
+    developerName = 'Roxbyte'
+    developerEmail = 'develop.android@roxbyte.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                packaging 'aar'
+
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'roxbyte'
+                        name 'Roxbyte'
+                        email 'develop.android@roxbyte.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+
+    configurations = ['archives']
+    pkg {
+        repo = "maven"
+        name = projectNameMaven
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
