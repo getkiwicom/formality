@@ -18,13 +18,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-def projectNameMaven = 'formality'
+group = 'com.roxbyte.formality'
+version = '0.1.1'
 
-group = 'com.roxbyte.${projectNameMaven}'
-version = '0.2.1'
-
-def siteUrl = 'https://github.com/Roxbyte/${projectNameMaven}'
-def gitUrl = 'https://github.com/Roxbyte/${projectNameMaven}.git'
+def siteUrl = 'https://github.com/Roxbyte/formality'
+def gitUrl = 'https://github.com/Roxbyte/formality.git'
 
 
 android {
@@ -64,28 +62,6 @@ def masterCount(){
 }
 
 //Bintray configuration
-
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = projectNameMaven
-
-    publishedGroupId = 'com.roxbyte.${projectNameMaven}'
-    libraryName = projectNameMaven
-    artifact = projectNameMaven
-
-    siteUrl = siteUrl
-    gitUrl = gitUrl
-
-    libraryVersion = version
-
-    developerId = 'roxbyte'
-    developerName = 'Roxbyte'
-    developerEmail = 'develop.android@roxbyte.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
-}
 
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
@@ -149,12 +125,13 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "maven"
-        name = projectNameMaven
+        name = 'formality'
+        desc = 'Create Android Forms'
+        labels = ['android', 'form']
+        version = version
         websiteUrl = siteUrl
-        desc = 'Create Android forms fast'
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
-        labels = ['android', 'forms']
         publish = true
     }
 }
