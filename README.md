@@ -2,7 +2,7 @@
 Create android forms with no pain
 
 # Dependency
-    compile 'com.roxbyte.formality:formality:0.2.1'
+    compile 'com.roxbyte.formality:formality:0.1.4'
 
 # License
     Copyright 2015 Roxbyte
