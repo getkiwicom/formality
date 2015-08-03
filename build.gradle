@@ -23,7 +23,7 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode versionCodeByGitCount()
+        versionCode masterCount()
         versionName "0.2.1"
     }
     buildTypes {
@@ -39,13 +39,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
 }
 
-def versionCodeByGitCount(){
+def masterCount(){
     def byteArrayOutputStream = new ByteArrayOutputStream()
 
     exec {
         workingDir projectDir
         executable 'git'
-        args 'rev-list', '--count', 'HEAD'
+        args 'rev-list', '--count', 'master'
         standardOutput = byteArrayOutputStream
 
     }
