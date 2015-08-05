@@ -19,7 +19,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.roxbyte.formality'
-version = '0.2.1'
+version = '0.2.2'
 
 def siteUrl = 'https://github.com/Roxbyte/formality'
 def gitUrl = 'https://github.com/Roxbyte/formality.git'

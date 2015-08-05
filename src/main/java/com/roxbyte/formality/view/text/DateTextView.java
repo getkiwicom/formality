@@ -66,6 +66,10 @@ public class DateTextView extends DefaultTextView implements View.OnClickListene
         return validation;
     }
 
+    public Date getDateCurrent() {
+        return dateCurrent;
+    }
+
     public void setTextDate(String dateString, String pattern){
         try {
             dateCurrent = TimeUtil.getSimpleDateFormat(pattern).parse(dateString);
