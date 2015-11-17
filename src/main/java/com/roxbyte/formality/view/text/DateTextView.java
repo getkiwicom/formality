@@ -39,6 +39,7 @@ public class DateTextView extends DefaultTextView implements View.OnClickListene
 
     private DateDialog dateDialog;
     private Date dateCurrent;
+    private Date dateDefault;
     private boolean dateSelected;
 
     public DateTextView(Context context) {
@@ -59,6 +60,9 @@ public class DateTextView extends DefaultTextView implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+        if (dateDefault != null && !dateSelected) {
+            dateDialog.setDate(dateDefault);
+        }
         dateDialog.show();
     }
 
@@ -81,6 +85,10 @@ public class DateTextView extends DefaultTextView implements View.OnClickListene
             dateSelected = false;
             e.printStackTrace();
         }
+    }
+
+    public void setDateDefault(Date dateDefault) {
+        this.dateDefault = dateDefault;
     }
 
     @Override
